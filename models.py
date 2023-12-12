@@ -68,11 +68,11 @@ class TemperatureUNet(nn.Module):
         super(TemperatureUNet, self).__init__()
 
         # Encoder
-        self.enc1 = self.conv_block(2, 32, 3, 1, pool=False)#True)
-        self.enc2 = self.conv_block(32, 64, 3, 2, pool=False)#True)
-        self.enc3 = self.conv_block(64, 128, 3, 2, pool=False)#True)
-        self.enc4 = self.conv_block(128, 256, 3, 2, pool=False)#True)
-        self.enc5 = self.conv_block(256, 512, 3, 2, pool=False)#True) 
+        self.enc1 = self.conv_block(2, 32, 3, 1, pool=False)
+        self.enc2 = self.conv_block(32, 64, 3, 2, pool=False)
+        self.enc3 = self.conv_block(64, 128, 3, 2, pool=False)
+        self.enc4 = self.conv_block(128, 256, 3, 2, pool=False)
+        self.enc5 = self.conv_block(256, 512, 3, 2, pool=False)
 
         # Decoder with skip connections       
         self.up1 = nn.ConvTranspose3d(512, 256, kernel_size=3, stride=2, padding=1, output_padding=1)
