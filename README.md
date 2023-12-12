@@ -5,9 +5,9 @@ This repository contains the implementation of a neural network designed to pred
 
 ## Features
 - 3D Encoder-decoder-based convolutional neural network (EDCNN), U-Net, and Attention U-Net architecture for accurate prediction of ablated area and temperature distribution.
-- Custom loss functions that combine MSE, weighted MSE, and dice loss to enhance prediction accuracy.
+- Custom loss functions that combine MSE, weighted MSE, and weighted Dice loss to enhance prediction accuracy.
 - Data pre-processing and loading modules for efficient handling of RFA simulation data.
-- Evaluation metrics to assess model performance, including MSE, RMSE, Dice coefficient, and Jaccard index.
+- Evaluation metrics to assess model performance, including MSE, RMSE, dice coefficient, and Jaccard index.
 
 ## Requirements
 - python 3.9
