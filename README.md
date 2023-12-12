@@ -9,6 +9,11 @@ This repository contains the implementation of a neural network designed to pred
 - Data pre-processing and loading modules for efficient handling of RFA simulation data.
 - Evaluation metrics to assess model performance, including MSE, RMSE, Dice coefficient, and Jaccard index.
 
+## Requirements
+- python 3.9
+- torch-1.11.0+cu113
+- cudatoolkit-11.3.1
+
 ## Installation
 To set up the project environment:
 - Clone the repository: `git clone https://github.com/iangilan/RFANet.git`
