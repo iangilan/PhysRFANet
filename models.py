@@ -186,35 +186,20 @@ class AttentionUNet(nn.Module):
 
     def forward(self, Ninput, MR):
         x = torch.cat([Ninput, MR], dim=1)
-        #print('x.size() ', x.size())
         
         # encoding path
         x1 = self.Conv1(x)
-        #print('x1.size() ', x1.size())
-
         x2 = self.Maxpool(x1)
-        #print('x2.size() ', x2.size())
-        x2 = self.Conv2(x2)
-        #print('x2.size() ', x2.size())
-        
+        x2 = self.Conv2(x2)     
         x3 = self.Maxpool(x2)
-        #print('x3.size() ', x3.size())
         x3 = self.Conv3(x3)
-        #print('x3.size() ', x3.size())
-
         x4 = self.Maxpool(x3)
-        #print('x4.size() ', x4.size())
         x4 = self.Conv4(x4)
-        #print('x4.size() ', x4.size())
-
         x5 = self.Maxpool(x4)
-        #print('x5.size() ', x5.size())
         x5 = self.Conv5(x5)
-        #print('x5.size() ', x5.size())
 
         # decoding + concat path
         d5 = self.Up5(x5)
-        #print('d5.size() ', d5.size())
         x4 = self.Att5(g=d5,x=x4)
         d5 = torch.cat((x4,d5),dim=1)        
         d5 = self.Up_conv5(d5)
