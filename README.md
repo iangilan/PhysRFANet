@@ -28,9 +28,9 @@ The dataset used in this project consists of:
 3. Evaluate the model's performance on test data using `python test.py`.
 
 ## Model Architecture
--The `TemperatureEDCNN` model is a 3D EDCNN comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction.
--The `TemperatureUNet` model is a 3D U-Net comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction.
--The `TemperatureAttUNet` model is a 3D Attention U-Net comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction. 
+- The `TemperatureEDCNN` model is a 3D EDCNN comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction.
+- The `TemperatureUNet` model is a 3D U-Net comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction.
+- The `TemperatureAttUNet` model is a 3D Attention U-Net comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction. 
 The architectures of all models are defined in `models.py`.
 
 ## Custom Loss Function
