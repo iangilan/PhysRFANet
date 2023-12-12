@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from utils import conv_block, up_conv, Attention_block
 
 class TemperatureCNN(nn.Module):
     def __init__(self):
