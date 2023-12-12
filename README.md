@@ -15,12 +15,11 @@ To set up the project environment:
 
 ## Dataset
 The dataset used in this project consists of:
-
-- Temperature distribution data post-RFA treatment.
-- Electrode location and orientation data.
-- MRI scans indicating the damaged area post-treatment.
-
-> Note: Due to patient privacy, the dataset is not publicly available in this repository.
+- Temperature distribution data post-RFA treatment (https://drive.google.com/file/d/1F7OFzfXZdc6jGWc_qIpxW5WrgBBzYh_o/view?usp=sharing)
+- Ablated area data post-RFA treatment (https://drive.google.com/file/d/1CDLMCfDLaI5SfMdX6DV5EJflgjRwjj9D/view?usp=sharing)
+- Electrode location and geometry data during RFA treatment (https://drive.google.com/file/d/18rzSAqrPdOKl7YipzP73VnS7oK9d_-Ua/view?usp=sharing).
+- Segmented breast tumor data obtained from MR images (https://drive.google.com/file/d/1O85XRSbVJly1kMyxfzIvbwV-84xo0nxS/view?usp=sharing).
+> Note: Due to patient privacy, the original breast tumor MRI dataset is not publicly available in this repository.
 
 ## Usage
 1. Load and preprocess the data using `data_loader.py`.
