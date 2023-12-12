@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # Example usage
 
     # Initialize the model
-    model = TemperatureCNN()
+    model = TemperatureCNN() # Choose your model
     model.cuda() if torch.cuda.is_available() else model.cpu()
 
     # Define the loss function and optimizer
