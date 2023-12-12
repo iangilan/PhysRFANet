@@ -41,12 +41,12 @@ def create_data_loaders(data, batch_size, test_size=0.2):
 
 # Example file paths
 file_paths = {
-    'Temp_train': 'path/to/Temp_train.npy',
-    'Temp_test': 'path/to/Temp_test.npy',
-    'Ninput_train': 'path/to/Ninput_train.npy',
-    'Ninput_test': 'path/to/Ninput_test.npy',
-    'MR_train': 'path/to/MR_train.npy',
-    'MR_test': 'path/to/MR_test.npy'
+    'Temp_train': 'path/Temp_train.npy',
+    'Temp_test': 'path/Temp_test.npy',
+    'Ninput_train': 'path/Ninput_train.npy',
+    'Ninput_test': 'path/Ninput_test.npy',
+    'MR_train': 'path/MR_train.npy',
+    'MR_test': 'path/MR_test.npy'
 }
 
 # Example usage
