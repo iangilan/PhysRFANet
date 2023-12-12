@@ -38,7 +38,7 @@ The dataset used in this project consists of:
 - The architectures of all models are defined in `models.py`.
 
 ## Custom Loss Function
-The model uses a combined loss function (`new_combined_loss` in `utils.py`) incorporating MSE, weighted MSE, and Dice loss to cater to the specific challenges in RFA thermal effect prediction.
+The model uses a combined loss function (`new_combined_loss` in `utils.py`) incorporating MSE, weighted MSE, and weighted Dice loss to cater to the specific challenges in RFA thermal effect prediction.
 
 ## Evaluation
 The model is evaluated based on Mean Squared Error (MSE), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and Dice Coefficient, providing a comprehensive assessment of its prediction accuracy.
