@@ -16,9 +16,9 @@ To set up the project environment:
 ## Dataset
 The dataset used in this project consists of:
 
--Temperature distribution data post-RFA treatment.
--Electrode location and orientation data.
--MRI scans indicating the damaged area post-treatment.
+- Temperature distribution data post-RFA treatment.
+- Electrode location and orientation data.
+- MRI scans indicating the damaged area post-treatment.
 
 > Note: Due to patient privacy, the dataset is not publicly available in this repository.
 
@@ -31,7 +31,7 @@ The dataset used in this project consists of:
 - The `TemperatureEDCNN` model is a 3D EDCNN comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction.
 - The `TemperatureUNet` model is a 3D U-Net comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction.
 - The `TemperatureAttUNet` model is a 3D Attention U-Net comprising of encoder and decoder blocks for feature extraction and temperature distribution prediction. 
-The architectures of all models are defined in `models.py`.
+- The architectures of all models are defined in `models.py`.
 
 ## Custom Loss Function
 The model uses a combined loss function (`new_combined_loss` in `utils.py`) incorporating MSE, weighted MSE, and Dice loss to cater to the specific challenges in RFA thermal effect prediction.
