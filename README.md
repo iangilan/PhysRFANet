@@ -27,10 +27,11 @@ The dataset used in this project consists of:
 > Note: Due to patient privacy, the original breast tumor MRI dataset is not publicly available in this repository.
 
 ## Usage
-1. Edit config.py according to the user's need.
-1. Load and preprocess the data using `data_loader_Temp.py` and `data_loader_Dmg.py` for temperature distribution and damaged area, respectively. 
-2. Train the model using `python train_Temp.py` or `python train_Dmg.py`.
-3. Evaluate the model's performance on test data using `python test_Temp.py` or `python test_Dmg.py`.
+1. Locate your RFA dataset in your local storage.
+2. Edit config.py according to the user's need.
+3. Load and preprocess the data using `data_loader_Temp.py` and `data_loader_Dmg.py` for temperature distribution and damaged area, respectively. 
+4. Train the model using `python train_Temp.py` or `python train_Dmg.py`.
+5. Evaluate the model's performance on test data using `python test_Temp.py` or `python test_Dmg.py`.
 
 ## Model Architecture
 - The `RFACNN` model is a 3D EDCNN that consists of encoder and decoder blocks, designed for extracting features and predicting both temperature distribution and damaged (ablated) areas.
