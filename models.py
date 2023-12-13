@@ -2,25 +2,25 @@ import torch
 import torch.nn as nn
 from utils import conv_block, up_conv, Attention_block
 
-class TemperatureCNN(nn.Module):
+class RFACNN(nn.Module):
     def __init__(self):
-        super(TemperatureCNN, self).__init__()
+        super(RFACNN, self).__init__()
 
         # Encoder
         self.encoder = nn.Sequential(
-            nn.Conv3d(2, 32, kernel_size=(3, 3, 3), stride=1, padding=1),
+            nn.Conv3d(2, 32, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm3d(32),
             nn.ReLU(inplace=True),
-            nn.Conv3d(32, 64, kernel_size=(3, 3, 3), stride=2, padding=1),
+            nn.Conv3d(32, 64, kernel_size=3, stride=2, padding=1),
             nn.BatchNorm3d(64),
             nn.ReLU(inplace=True),
-            nn.Conv3d(64, 128, kernel_size=(3, 3, 3), stride=2, padding=1),
+            nn.Conv3d(64, 128, kernel_size=3, stride=2, padding=1),
             nn.BatchNorm3d(128),
             nn.ReLU(inplace=True),
-            nn.Conv3d(128, 256, kernel_size=(3, 3, 3), stride=2, padding=1),
+            nn.Conv3d(128, 256, kernel_size=3, stride=2, padding=1),
             nn.BatchNorm3d(256),
             nn.ReLU(inplace=True),
-            nn.Conv3d(256, 256, kernel_size=(3, 3, 3), stride=2, padding=1)
+            nn.Conv3d(256, 256, kernel_size=3, stride=2, padding=1)
         )
 
         # Decoder
@@ -28,13 +28,13 @@ class TemperatureCNN(nn.Module):
             nn.ConvTranspose3d(256, 128, kernel_size=3, stride=2, padding=1, output_padding=1),
             nn.BatchNorm3d(128),
             nn.ReLU(inplace=True),
-            nn.ConvTranspose3d(128, 64, kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose3d(128, 64, kernel_size=3, stride=2, padding=1, output_padding=0),
             nn.BatchNorm3d(64),
             nn.ReLU(inplace=True),
-            nn.ConvTranspose3d(64, 32, kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose3d(64, 32, kernel_size=3, stride=2, padding=1, output_padding=0),
             nn.BatchNorm3d(32),
             nn.ReLU(inplace=True),
-            nn.ConvTranspose3d(32, 16, kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose3d(32, 16, kernel_size=3, stride=2, padding=1, output_padding=0),
             nn.BatchNorm3d(16),
             nn.ReLU(inplace=True),
             nn.Conv3d(16, 16, kernel_size=(3, 3, 3), padding=1),
@@ -63,9 +63,9 @@ class TemperatureCNN(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
 
-class TemperatureUNet(nn.Module):
+class RFAUNet(nn.Module):
     def __init__(self):
-        super(TemperatureUNet, self).__init__()
+        super(RFAUNet, self).__init__()
 
         # Encoder
         self.enc1 = self.conv_block(2, 32, 3, 1, pool=False)
@@ -153,9 +153,9 @@ class TemperatureUNet(nn.Module):
         final_out = self.final(dec5_out)
         return final_out
 
-class AttentionUNet(nn.Module):
+class RFAAttUNet(nn.Module):
     def __init__(self,img_ch=2,output_ch=1):
-        super(AttentionUNet,self).__init__()
+        super(RFAAttUNet,self).__init__()
         
         self.Maxpool = nn.MaxPool3d(kernel_size=2,stride=2)
 
