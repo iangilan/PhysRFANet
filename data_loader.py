@@ -40,7 +40,7 @@ def create_data_loaders(data, batch_size, test_size=0.2):
     return train_loader, test_loader
 
 # Example file paths
-data_path = "your/data/path"
+data_path = "data" #"your/data/path"
 file_paths = {
     'Temp_train'  : 'data_path/Temp_train.npy',
     'Temp_test'   : 'data_path/Temp_test.npy',
