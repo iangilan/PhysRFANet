@@ -47,7 +47,7 @@ The model is evaluated based on Mean Squared Error (MSE), Root Mean Squared Erro
 
 ## Citation
 If you use this tool in your research, please cite the following paper:
-- <sup>1</sup> [M. Shin, M. Seo, S. Cho, J. Park, J. Kwon, D. Lee, K. Yoon. "RFANet: Physics-Guided Neural Network for Real-Time Prediction of Thermal Effect During Radiofrequency Ablation Treatment." *TBD*](link-to-paper)
+- [M. Shin, M. Seo, S. Cho, J. Park, J. Kwon, D. Lee, K. Yoon. "RFANet: Physics-Guided Neural Network for Real-Time Prediction of Thermal Effect During Radiofrequency Ablation Treatment." *TBD*](link-to-paper)
 
 ## Contact
 For any queries, please reach out to [Minwoo Shin](mjmj0210@gmail.com).
