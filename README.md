@@ -29,7 +29,7 @@ The dataset used in this project consists of:
 ## Usage
 1. Locate your RFA dataset in your local storage.
 2. Edit config.py according to the user's need.
-3. Load and preprocess the data using `data_loader_Temp.py` and `data_loader_Dmg.py` for temperature distribution and damaged area, respectively. 
+3. Edit the data loaders `data_loader_Temp.py` and `data_loader_Dmg.py` for temperature distribution and damaged area, respectively, to load and preprocess the data. 
 4. Train the model using `python train_Temp.py` or `python train_Dmg.py`.
 5. Evaluate the model's performance on test data using `python test_Temp.py` or `python test_Dmg.py`.
 
