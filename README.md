@@ -24,8 +24,7 @@ The dataset used in this project consists of:
 - Ablated area data post-RFA treatment (https://drive.google.com/file/d/1CDLMCfDLaI5SfMdX6DV5EJflgjRwjj9D/view?usp=sharing)
 - Electrode location and geometry data during RFA treatment (https://drive.google.com/file/d/18rzSAqrPdOKl7YipzP73VnS7oK9d_-Ua/view?usp=sharing).
 - Segmented breast tumor data obtained from MR images (https://drive.google.com/file/d/1O85XRSbVJly1kMyxfzIvbwV-84xo0nxS/view?usp=sharing).
-[]> Note: Due to patient privacy, the original breast tumor MRI dataset is not publicly available in this repository.
-> Note: MR images of breast cancer patients from a publicly available dataset [Saha et al., 2018](https://www.nature.com/articles/s41416-018-0185-8) were utilized to model tumor geometry.
+> Note: MR images of breast cancer patients from a publicly available dataset ([Saha et al., 2018](https://www.nature.com/articles/s41416-018-0185-8)) were utilized to model tumor geometry.
 
 ## Usage
 1. Locate your RFA dataset in your local storage.
