@@ -19,12 +19,12 @@ def test_model(model, test_loader):
 
             Ninput_test_data_batch = Ninput_test_data_batch.unsqueeze(1)
             MR_test_data_batch     = MR_test_data_batch.unsqueeze(1)
-            Dmg_test_data_batch   = Dmg_test_data_batch.unsqueeze(1)
+            Dmg_test_data_batch    = Dmg_test_data_batch.unsqueeze(1)
 
             if torch.cuda.is_available(): # Move data to GPU if available
                 Ninput_test_data_batch = Ninput_test_data_batch.cuda()
                 MR_test_data_batch     = MR_test_data_batch.cuda()
-                Dmg_test_data_batch   = Dmg_test_data_batch.cuda()          
+                Dmg_test_data_batch    = Dmg_test_data_batch.cuda()          
 
             # Forward pass
             outputs = model(Ninput_test_data_batch, MR_test_data_batch)
