@@ -24,7 +24,8 @@ The dataset used in this project consists of:
 - Ablated area data post-RFA treatment (https://drive.google.com/file/d/1CDLMCfDLaI5SfMdX6DV5EJflgjRwjj9D/view?usp=sharing)
 - Electrode location and geometry data during RFA treatment (https://drive.google.com/file/d/18rzSAqrPdOKl7YipzP73VnS7oK9d_-Ua/view?usp=sharing).
 - Segmented breast tumor data obtained from MR images (https://drive.google.com/file/d/1O85XRSbVJly1kMyxfzIvbwV-84xo0nxS/view?usp=sharing).
-> Note: Due to patient privacy, the original breast tumor MRI dataset is not publicly available in this repository.
+[]> Note: Due to patient privacy, the original breast tumor MRI dataset is not publicly available in this repository.
+> Note: MR images of breast cancer patients from a publicly available dataset [Saha et al. 2018](https://www.nature.com/articles/s41416-018-0185-8) were utilized to model tumor geometry.
 
 ## Usage
 1. Locate your RFA dataset in your local storage.
@@ -48,6 +49,7 @@ The model is evaluated based on Mean Squared Error (MSE), Root Mean Squared Erro
 ## Citation
 If you use this tool in your research, please cite the following paper:
 - [M. Shin, M. Seo, S. Cho, J. Park, J. Kwon, D. Lee, K. Yoon. "PhyRFANet: Physics-Guided Neural Network for Real-Time Prediction of Thermal Effect During Radiofrequency Ablation Treatment." *TBD*](link-to-paper)
+- [A. Saha, M. R. Harowicz, L. J. Grimm, C. E. Kim, S. V. Ghate, R. Walsh, M. A. Mazurowski, A machine learning approach to radiogenomics of breast cancer: a study of 922 subjects and 529 DCE-MRI features, Br. J. Cancer. 119 (2018) 508–516.](https://www.nature.com/articles/s41416-018-0185-8)
 
 ## Contact
 For any queries, please reach out to [Minwoo Shin](mjmj0210@gmail.com).
