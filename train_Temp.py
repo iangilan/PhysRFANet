@@ -17,8 +17,8 @@ def train_model(model, criterion, optimizer, train_loader, num_epochs):
             # Move data to GPU if available
             if torch.cuda.is_available():
                 Ninput_train_data_batch = Ninput_train_data_batch.unsqueeze(1).cuda()
-                MR_train_data_batch = MR_train_data_batch.unsqueeze(1).cuda()
-                Temp_train_data_batch = Temp_train_data_batch.unsqueeze(1).cuda()
+                MR_train_data_batch     = MR_train_data_batch.unsqueeze(1).cuda()
+                Temp_train_data_batch   = Temp_train_data_batch.unsqueeze(1).cuda()
 
             # Forward pass
             outputs = model(Ninput_train_data_batch, MR_train_data_batch)
