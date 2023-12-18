@@ -73,11 +73,13 @@ if __name__ == "__main__":
 
     # Create the DmgDataset object
     Dmg_train_dataset = DmgDataset(Ninput_train_data, MR_train_data, Dmg_train_data)
+    Dmg_valid_dataset = DmgDataset(Ninput_valid_data, MR_valid_data, Temp_valid_data)
     Dmg_test_dataset_foreseen  = DmgDataset(Ninput_test_data_foreseen, MR_test_data_foreseen, Dmg_test_data_foreseen)
     Dmg_test_dataset_unforeseen  = DmgDataset(Ninput_test_data_unforeseen, MR_test_data_unforeseen, Dmg_test_data_unforeseen)
 
     # Create the data loader
     Dmg_train_loader = DataLoader(Dmg_train_dataset, batch_size=batch_size, shuffle=True)
+    Dmg_valid_loader = DataLoader(Dmg_valid_dataset, batch_size=batch_size, shuffle=True)
     Dmg_test_loader_foreseen = DataLoader(Dmg_test_dataset_foreseen, batch_size=batch_size, shuffle=True)    
     Dmg_test_loader_unforeseen = DataLoader(Dmg_test_dataset_foreseen, batch_size=batch_size, shuffle=True)    
 
