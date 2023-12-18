@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from utils import conv_block, up_conv, Attention_block
 
 class RFACNN(nn.Module):
@@ -154,11 +155,6 @@ class RFAUNet(nn.Module):
             u3 = F.interpolate(u3, [41, 41, 41])
 
         return u3
-
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
 
 class AttentionUNet(nn.Module):
     def __init__(self, in_channels=2, out_channels=1, in_inter=True, out_inter=True):
