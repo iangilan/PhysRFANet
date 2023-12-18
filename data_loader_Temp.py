@@ -48,28 +48,37 @@ def load_data(file_paths):
     # Split the data into training and test sets
     Temp_train_data, Temp_test_data_foreseen = train_test_split(Temp_train_data, test_size=500, random_state=42)
     Temp_test_data_unforeseen, Temp_test_data_dummy = train_test_split(Temp_test_data, test_size=500, random_state=42)
+    Temp_train_data, Temp_valid_data = train_test_split(Temp_train_data, test_size=1000, random_state=42)
 
     # Split the data into training and test sets
     Ninput_train_data, Ninput_test_data_foreseen = train_test_split(Ninput_train_data, test_size=500, random_state=42)
     Ninput_test_data_unforeseen, Ninput_test_data_dummy = train_test_split(Ninput_test_data, test_size=500, random_state=42)
+    Ninput_train_data, Ninput_valid_data = train_test_split(Ninput_train_data, test_size=1000, random_state=42)
 
     # Split the data into training and test sets
     MR_train_data, MR_test_data_foreseen = train_test_split(MR_train_data, test_size=500, random_state=42)
     MR_test_data_unforeseen, MR_test_data_dummy = train_test_split(MR_test_data, test_size=500, random_state=42)
+    MR_train_data, MR_valid_data = train_test_split(MR_train_data, test_size=1000, random_state=42)
     
-    return Temp_train_data, Ninput_train_data, MR_train_data, Temp_test_data_foreseen, Temp_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen
+    return Temp_train_data, Ninput_train_data, MR_train_data, 
+    Temp_valid_data, Ninput_valid_data, MR_valid_data, 
+    Temp_test_data_foreseen, Temp_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen
 
 
 if __name__ == "__main__":
-    Temp_train_data, Ninput_train_data, MR_train_data, Temp_test_data_foreseen, Temp_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen = load_data(file_paths)
+    Temp_train_data, Ninput_train_data, MR_train_data, 
+    Temp_valid_data, Ninput_valid_data, MR_valid_data, 
+    Temp_test_data_foreseen, Temp_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen = load_data(file_paths)
 
     # Create the TemperatureDataset object
     Temp_train_dataset = TemperatureDataset(Ninput_train_data, MR_train_data, Temp_train_data)
+    Temp_valid_dataset = TemperatureDataset(Ninput_valid_data, MR_valid_data, Temp_valid_data)
     Temp_test_dataset_foreseen  = TemperatureDataset(Ninput_test_data_foreseen, MR_test_data_foreseen, Temp_test_data_foreseen)
     Temp_test_dataset_unforeseen  = TemperatureDataset(Ninput_test_data_unforeseen, MR_test_data_unforeseen, Temp_test_data_unforeseen)
 
     # Create the data loader
     Temp_train_loader = DataLoader(Temp_train_dataset, batch_size=batch_size, shuffle=True)
+    Temp_valid_loader = DataLoader(Temp_valid_dataset, batch_size=batch_size, shuffle=True)
     Temp_test_loader_foreseen = DataLoader(Temp_test_dataset_foreseen, batch_size=batch_size, shuffle=True)    
     Temp_test_loader_unforeseen = DataLoader(Temp_test_dataset_foreseen, batch_size=batch_size, shuffle=True)    
 
