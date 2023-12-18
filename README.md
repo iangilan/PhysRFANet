@@ -16,7 +16,7 @@ This repository contains the implementation of a neural network designed to pred
 
 ## Installation
 To set up the project environment:
-- Clone the repository: `git clone https://github.com/iangilan/RFANet.git`
+- Clone the repository: `git clone https://github.com/iangilan/PhysRFANet.git`
 
 ## Dataset
 The dataset used in this project consists of:
