@@ -8,6 +8,7 @@ from config import num_epochs, batch_size, alpha, beta, gamma, model_path_Temp, 
 
 def train_model(model, criterion, optimizer, train_loader, num_epochs):
     model.train()
+    # Train loop
     for epoch in range(num_epochs):
         epoch_loss = 0
 
@@ -36,6 +37,31 @@ def train_model(model, criterion, optimizer, train_loader, num_epochs):
 
         # Print the average loss for the epoch
         print(f'Epoch: {epoch+1}, Average Loss: {epoch_loss / len(train_loader)}')
+
+        # Validation loop
+        model.eval()  # Set the model to evaluation mode
+        with torch.no_grad():  # No gradients required for validation
+            val_loss = 0
+
+            for val_batch in Temp_valid_loader:
+                # Forward pass
+                Ninput_val_data_batch, MR_val_data_batch, Temp_val_data_batch = val_batch
+                Temp_val_data_batch   = Temp_val_data_batch.unsqueeze(1).cuda()
+                MR_val_data_batch     = MR_val_data_batch.unsqueeze(1).cuda()
+                Ninput_val_data_batch = Ninput_val_data_batch.unsqueeze(1).cuda()
+
+                val_outputs = model(Ninput_val_data_batch, MR_val_data_batch)
+
+                # Calculate the loss
+                loss = criterion(val_outputs, Temp_val_data_batch,alpha,beta,gamma)
+                val_loss += loss.item()
+
+            # Calculate average validation loss and update the scheduler
+            avg_val_loss = val_loss / len(Temp_valid_loader)
+            scheduler.step(avg_val_loss)
+
+            # Print validation loss
+            print(f'Epoch: {epoch+1}, Validation Loss: {val_loss / len(Temp_valid_loader)}')    
 
     # Save the trained model
     torch.save(model.state_dict(), f'{model_path_Temp}/temperature_model.pth')
