@@ -13,12 +13,9 @@ def train_model(model, criterion, optimizer, train_loader, num_epochs):
 
         for batch in tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs}", leave=False):
             Ninput_train_data_batch, MR_train_data_batch, Dmg_train_data_batch = batch
-
-            # Move data to GPU if available
-            if torch.cuda.is_available():
-                Ninput_train_data_batch = Ninput_train_data_batch.unsqueeze(1).cuda()
-                MR_train_data_batch     = MR_train_data_batch.unsqueeze(1).cuda()
-                Dmg_train_data_batch   = Dmg_train_data_batch.unsqueeze(1).cuda()
+            Ninput_train_data_batch = Ninput_train_data_batch.unsqueeze(1).cuda()
+            MR_train_data_batch     = MR_train_data_batch.unsqueeze(1).cuda()
+            Dmg_train_data_batch   = Dmg_train_data_batch.unsqueeze(1).cuda()
 
             # Forward pass
             outputs = model(Ninput_train_data_batch, MR_train_data_batch)
