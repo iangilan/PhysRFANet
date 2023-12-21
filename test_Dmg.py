@@ -1,9 +1,10 @@
 import torch
 from models import RFACNN, RFAUNet, RFAAttUNet
-from data_loader_Dmg import DmgDataset, load_data, DataLoader, batch_size
-from utils import new_combined_loss
+from data_loader_Dmg import DmgDataset, load_data
+from torch.utils.data import Dataset, DataLoader
+from utils import dice_loss
 import config
-from config import num_epochs, batch_size, alpha, beta, gamma, model_path_Dmg, file_paths
+from config import num_epochs, batch_size, model_path_Dmg, file_paths
 
 def test_model(model, test_loader):
     model.eval()  # Set the model to evaluation mode
@@ -17,14 +18,9 @@ def test_model(model, test_loader):
         for batch in test_loader:
             Ninput_test_data_batch, MR_test_data_batch, Dmg_test_data_batch = batch
 
-            Ninput_test_data_batch = Ninput_test_data_batch.unsqueeze(1)
-            MR_test_data_batch     = MR_test_data_batch.unsqueeze(1)
-            Dmg_test_data_batch    = Dmg_test_data_batch.unsqueeze(1)
-
-            if torch.cuda.is_available(): # Move data to GPU if available
-                Ninput_test_data_batch = Ninput_test_data_batch.cuda()
-                MR_test_data_batch     = MR_test_data_batch.cuda()
-                Dmg_test_data_batch    = Dmg_test_data_batch.cuda()          
+            Ninput_test_data_batch = Ninput_test_data_batch.unsqueeze(1).cuda()
+            MR_test_data_batch     = MR_test_data_batch.unsqueeze(1).cuda()
+            Dmg_test_data_batch    = Dmg_test_data_batch.unsqueeze(1).cuda()      
 
             # Forward pass
             outputs = model(Ninput_test_data_batch, MR_test_data_batch)
@@ -35,7 +31,7 @@ def test_model(model, test_loader):
             all_Ninput.extend(Ninput_test_data_batch.cpu().numpy()) 
 
             # Calculate the loss for this batch
-            loss = new_combined_loss(outputs, Dmg_test_data_batch, alpha, beta, gamma)
+            loss = dice_loss(outputs, Dmg_test_data_batch)
             total_loss += loss.item()
 
     # Calculate average loss over all batches
@@ -49,7 +45,8 @@ def test_model(model, test_loader):
 
 if __name__ == "__main__":
     # Load data from data_loader
-    Dmg_train_data, Ninput_train_data, MR_train_data, Dmg_test_data_foreseen, Dmg_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen = load_data(file_paths)
+    Dmg_train_data, Ninput_train_data, MR_train_data, Dmg_valid_data, Ninput_valid_data, MR_valid_data, Dmg_test_data_foreseen, Dmg_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen = load_data(file_paths)
+    
     # Load the training dataset
     Dmg_test_dataset_foreseen = DmgDataset(Ninput_test_data_foreseen, MR_test_data_foreseen, Dmg_test_data_foreseen)
     Dmg_test_dataset_unforeseen = DmgDataset(Ninput_test_data_unforeseen, MR_test_data_unforeseen, Dmg_test_data_unforeseen)    

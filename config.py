@@ -1,5 +1,5 @@
 # Configuration settings
-num_epochs = 100
+num_epochs = 1
 batch_size = 16 # Batch size for DataLoader
 
 # weights for the combined loss function
