@@ -15,7 +15,7 @@ def train_model(model, criterion, optimizer, train_loader, num_epochs):
             Ninput_train_data_batch, MR_train_data_batch, Dmg_train_data_batch = batch
             Ninput_train_data_batch = Ninput_train_data_batch.unsqueeze(1).cuda()
             MR_train_data_batch     = MR_train_data_batch.unsqueeze(1).cuda()
-            Dmg_train_data_batch   = Dmg_train_data_batch.unsqueeze(1).cuda()
+            Dmg_train_data_batch    = Dmg_train_data_batch.unsqueeze(1).cuda()
 
             # Forward pass
             outputs = model(Ninput_train_data_batch, MR_train_data_batch)
