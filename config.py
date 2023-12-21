@@ -1,11 +1,11 @@
 # Configuration settings
-num_epochs = 200
+num_epochs = 100
 batch_size = 16 # Batch size for DataLoader
 
 # weights for the combined loss function
-alpha = 0.6
+alpha = 0.7
 beta  = 0.1
-gamma = 0.3
+gamma = 0.2
 
 # model path
 model_path_Temp = "model_Temp" # Replace with your actual Temperature model path
