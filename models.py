@@ -91,7 +91,7 @@ class RFAUNet(nn.Module):
     def unet_down(in_size, out_size, normalize=True, dropout=0.0):
         layers = [nn.Conv3d(in_size, out_size, 3, 2, 1, bias=False)]
         if normalize:
-            layers.append(nn.InstanceNorm3d(out_size))
+            layers.append(nn.BatchNorm3d(out_size))
         layers.append(nn.LeakyReLU(0.2))
         if dropout:
             layers.append(nn.Dropout(dropout))
@@ -101,7 +101,7 @@ class RFAUNet(nn.Module):
     def unet_mid(in_size, out_size, dropout=0.0):
         layers = [
             nn.Conv3d(in_size, out_size, 3, 1, 1, bias=False),
-            nn.InstanceNorm3d(out_size),
+            nn.BatchNorm3d(out_size),
             nn.LeakyReLU(0.2)
         ]
         if dropout:
@@ -118,7 +118,7 @@ class RFAUNet(nn.Module):
     def unet_up(in_size, out_size, dropout=0.0):
         layers = [
             nn.ConvTranspose3d(in_size, out_size, 2, 2, bias=False),
-            nn.InstanceNorm3d(out_size),
+            nn.BatchNorm3d(out_size),
             nn.ReLU(inplace=True),
         ]
         if dropout:
