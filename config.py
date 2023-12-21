@@ -8,8 +8,8 @@ beta  = 0.1
 gamma = 0.3
 
 # model path
-model_path_Temp = "models_Temp" # Replace with your actual Temperature model path
-model_path_Dmg  = "models_Dmg"  # Replace with your actual Damage model path
+model_path_Temp = "model_Temp" # Replace with your actual Temperature model path
+model_path_Dmg  = "model_Dmg"  # Replace with your actual Damage model path
 
 # training/test data path
 data_path = "data"  # Replace with your actual data path
