@@ -154,9 +154,9 @@ class RFAUNet(nn.Module):
 
         return u3
 
-class AttentionUNet(nn.Module):
+class RFAAttUNet(nn.Module):
     def __init__(self, in_channels=2, out_channels=1, in_inter=True, out_inter=True):
-        super(AttentionUNet, self).__init__()
+        super(RFAAttUNet, self).__init__()
 
         self.in_inter = in_inter
         self.out_inter = out_inter
