@@ -3,7 +3,7 @@ import torch.optim as optim
 from tqdm import tqdm
 from models import RFACNN, RFAUNet, RFAAttUNet
 from data_loader_Dmg import DmgDataset, load_data, DataLoader, batch_size
-from utils import new_combined_loss
+from utils import dice_loss
 from config import num_epochs, batch_size, alpha, beta, gamma, model_path_Dmg, file_paths
 
 def train_model(model, criterion, optimizer, train_loader, num_epochs):
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     model.cuda() if torch.cuda.is_available() else model.cpu()
 
     # Define the loss function and optimizer
-    criterion = new_combined_loss
+    criterion = dice_loss
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     # Load the training dataset
