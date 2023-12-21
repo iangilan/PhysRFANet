@@ -79,6 +79,6 @@ if __name__ == "__main__":
     # Create the data loader
     Temp_train_loader = DataLoader(Temp_train_dataset, batch_size=batch_size, shuffle=True)
     Temp_valid_loader = DataLoader(Temp_valid_dataset, batch_size=batch_size, shuffle=True)
-    Temp_test_loader_foreseen = DataLoader(Temp_test_dataset_foreseen, batch_size=batch_size, shuffle=True)    
-    Temp_test_loader_unforeseen = DataLoader(Temp_test_dataset_foreseen, batch_size=batch_size, shuffle=True)    
+    Temp_test_loader_foreseen = DataLoader(Temp_test_dataset_foreseen, batch_size=batch_size, shuffle=False)    
+    Temp_test_loader_unforeseen = DataLoader(Temp_test_dataset_foreseen, batch_size=batch_size, shuffle=False)    
 
