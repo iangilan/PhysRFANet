@@ -83,8 +83,7 @@ class RFAUNet(nn.Module):
         self.up2 = self.unet_up(256, 64)
         
         self.final = nn.Sequential(
-            nn.ConvTranspose3d(128, out_channels, 2, 2),
-            nn.ReLU()
+            nn.ConvTranspose3d(128, out_channels, 2, 2)
         )
 
     @staticmethod
@@ -179,15 +178,14 @@ class AttentionUNet(nn.Module):
         self.sa3 = self.self_attention(128)
 
         self.final = nn.Sequential(
-            nn.ConvTranspose3d(128, out_channels, 2, 2),
-            nn.ReLU()
+            nn.ConvTranspose3d(128, out_channels, 2, 2)
         )
 
     @staticmethod
     def unet_down(in_size, out_size, normalize=True, dropout=0.0):
         layers = [nn.Conv3d(in_size, out_size, 3, 2, 1, bias=False)]
         if normalize:
-            layers.append(nn.InstanceNorm3d(out_size))
+            layers.append(nn.BatchNorm3d(out_size))
         layers.append(nn.LeakyReLU(0.2))
         if dropout:
             layers.append(nn.Dropout(dropout))
@@ -197,7 +195,7 @@ class AttentionUNet(nn.Module):
     def unet_mid(in_size, out_size, dropout=0.0):
         layers = [
             nn.Conv3d(in_size, out_size, 3, 1, 1, bias=False),
-            nn.InstanceNorm3d(out_size),
+            nn.BatchNorm3d(out_size),
             nn.LeakyReLU(0.2)
         ]
         if dropout:
@@ -208,7 +206,7 @@ class AttentionUNet(nn.Module):
     def unet_up(in_size, out_size, dropout=0.0):
         layers = [
             nn.ConvTranspose3d(in_size, out_size, 2, 2, bias=False),
-            nn.InstanceNorm3d(out_size),
+            nn.BatchNorm3d(out_size),
             nn.ReLU(inplace=True)
         ]
         if dropout:
