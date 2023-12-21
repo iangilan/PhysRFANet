@@ -87,32 +87,90 @@ def mae_3d(pred, label):
     mae = np.mean(np.abs(pred - label))
     return mae
 
-def dice_score(pred, target, threshold):
+def dice_score(pred, target, epsilon=1e-6):
     """
-    Compute Dice Loss for values greater than the threshold.
+    Compute the Dice Loss.
 
     Args:
-    - pred (torch.Tensor): the network's raw output.
-    - target (torch.Tensor): the ground truth.
-    - threshold (float): the threshold value to consider in the loss computation. Default is 50.
+    - pred (torch.Tensor): the network's prediction output, with values in [0, 1].
+    - target (torch.Tensor): the ground truth targets, with values in [0, 1].
+    - epsilon (float): a small value to avoid division by zero.
 
     Returns:
-    - dice_loss_val (torch.Tensor): computed Dice loss.
+    - dice_loss (torch.Tensor): the computed Dice loss.
     """
+    # Convert numpy arrays to PyTorch tensors if necessary
+    if isinstance(pred, np.ndarray):
+        pred = torch.from_numpy(pred)
+    if isinstance(target, np.ndarray):
+        target = torch.from_numpy(target)    
+    
+    pred = torch.sigmoid(pred)
+    # Flatten the tensors to simplify the computation
+    pred_flat = pred.view(-1)
+    target_flat = target.view(-1)
 
-    # Binarize tensors
-    pred = (pred > threshold).astype(int)
-    target = (target > threshold).astype(int)
+    # Compute the intersection and union
+    intersection = (pred_flat * target_flat).sum()
+    union = pred_flat.sum() + target_flat.sum()
 
-    # Compute Dice coefficient
-    intersection = (pred * target).sum()
-    dice_coef = (2. * intersection) / (pred.sum() + target.sum())  # Adding a small epsilon to avoid division by zero
+    # Compute Dice coefficient and Dice loss
+    dice_coef = (2. * intersection + epsilon) / (union + epsilon)
 
-    # Return Dice loss
     return dice_coef
 
+def jaccard_score(pred, target, epsilon=1e-6):
+    """
+    Calculate the Jaccard score (Intersection over Union) for binary arrays.
 
-def calculate_metrics(all_predictions, all_labels, folder_name):
+    :param pred: Numpy array of predictions (binary).
+    :param target: Numpy array of true targets (binary).
+    :return: Jaccard score as a float.
+    """
+    # Convert numpy arrays to PyTorch tensors if necessary
+    if isinstance(pred, np.ndarray):
+        pred = torch.from_numpy(pred)
+    if isinstance(target, np.ndarray):
+        target = torch.from_numpy(target)    
+    
+    pred = torch.sigmoid(pred)    
+    # Binarize tensors
+    pred = pred.view(-1)
+    target = target.view(-1)      
+
+    # Intersection and Union
+    intersection = (pred * target).sum()
+    total = (pred + target).sum()
+    union = total - intersection
+
+    # Jaccard score calculation
+    jaccard = (intersection + epsilon) / (union + epsilon)
+
+    return jaccard
+
+def hausdorff_distance(pred, target, threshold = 0):
+    """
+    Calculate the Hausdorff distance between two binary arrays.
+
+    :param pred: Numpy array of predictions (binary).
+    :param target: Numpy array of true targets (binary).
+    :return: Hausdorff distance as a float.
+    """
+    pred = np.where(pred > threshold, 1, 0)
+    # Extract the indices of the non-zero points
+    pred_points = np.argwhere(pred)
+    target_points = np.argwhere(target)
+
+    # Compute the directed Hausdorff distances and take the maximum
+    forward_hausdorff = directed_hausdorff(pred_points, target_points)[0]
+    reverse_hausdorff = directed_hausdorff(target_points, pred_points)[0]
+
+    hausdorff_dist = max(forward_hausdorff, reverse_hausdorff)
+    
+    return hausdorff_dist
+
+
+def calculate_metrics_temperature(all_predictions, all_labels, folder_name):
     """
     Calculate MSE, RMSE, MAE, and Dice scores for each pair of 3D arrays in the given lists.
     Save the results to text files and print the mean of each metric.
@@ -168,6 +226,46 @@ def calculate_metrics(all_predictions, all_labels, folder_name):
         file.write(f"Mean Absolute Error: {mae}\n")
         file.write(f"Dice Coefficient>40: {dice40}\n")
         file.write(f"Dice Coefficient>50: {dice50}\n")
+
+def calculate_metrics_damage(all_predictions, all_targets, folder_name):
+    """
+    Calculate MSE, RMSE, MAE, and Dice scores for each pair of 3D arrays in the given lists.
+    Save the results to text files and print the mean of each metric.
+    :param all_predictions: List of 3D Numpy arrays (predictions).
+    :param all_targets: List of 3D Numpy arrays (targets).
+    :param folder_name: Directory to save the result files.
+    """        
+    
+    # Extract 3D arrays from the lists
+    pred = [item[:, :, :] for item in all_predictions]
+    target = [item[:, :, :] for item in all_targets]
+
+    # Calculate and save Dice scores
+    dice_scores = [dice_score(p, l) for p, l in zip(pred, target)]
+    dice_scores_nparray = np.array(dice_scores).reshape(-1, 1)
+    np.savetxt(f"{folder_name}/dice.txt", dice_scores_nparray, fmt='%.4f')
+
+    jaccard_scores = [jaccard_score(p, l) for p, l in zip(pred, target)]
+    jaccard_scores_nparray = np.array(jaccard_scores).reshape(-1, 1)
+    np.savetxt(f"{folder_name}/jaccard.txt", jaccard_scores_nparray, fmt='%.4f')
+
+    hausdorff = [hausdorff_distance(p, l) for p, l in zip(pred, target)]
+    hausdorff_nparray = np.array(hausdorff).reshape(-1, 1)
+    np.savetxt(f"{folder_name}/hausdorff.txt", hausdorff_nparray, fmt='%.4f')
+
+    dice = np.mean(dice_scores_nparray)
+    jaccard = np.mean(jaccard_scores_nparray)
+    hausdorff = np.mean(hausdorff_nparray)
+    # Print the mean of each metric
+    print('dice: ', dice)
+    print('jaccard: ', jaccard)
+    print('hausdorff: ', hausdorff)
+
+    file_path = f"{folder_name}/results.txt"
+    with open(file_path, "w") as file:
+        file.write(f"Dice: {dice}\n")
+        file.write(f"Jaccard: {jaccard}\n")
+        file.write(f"Hausdorff: {hausdorff}\n")
 
 def save_plot(all_predictions, all_labels, all_Ninput, folder_name):
     """
