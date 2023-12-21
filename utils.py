@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.spatial.distance import directed_hausdorff
 
 def weighted_mse_loss(pred, target, weight=1.0, threshold=50.0):
     """
@@ -80,7 +83,7 @@ def new_combined_loss(pred, target, alpha, beta, gamma):
     """
     mse = nn.MSELoss()(pred, target)
     wmse = weighted_mse_loss(pred, target)
-    dice = dice_loss(pred, target)
+    dice = dice_loss50(pred, target)
     return alpha * mse + beta * wmse + gamma * dice
 
 def mse_3d(pred, label):
@@ -197,7 +200,7 @@ def hausdorff_distance(pred, target, threshold = 0):
     return hausdorff_dist
 
 
-def calculate_metrics_temperature(all_predictions, all_labels, folder_name):
+def calculate_metrics_Temp(all_predictions, all_labels, folder_name):
     """
     Calculate MSE, RMSE, MAE, and Dice scores for each pair of 3D arrays in the given lists.
     Save the results to text files and print the mean of each metric.
@@ -254,7 +257,7 @@ def calculate_metrics_temperature(all_predictions, all_labels, folder_name):
         file.write(f"Dice Coefficient>40: {dice40}\n")
         file.write(f"Dice Coefficient>50: {dice50}\n")
 
-def calculate_metrics_damage(all_predictions, all_targets, folder_name):
+def calculate_metrics_Dmg(all_predictions, all_targets, folder_name):
     """
     Calculate MSE, RMSE, MAE, and Dice scores for each pair of 3D arrays in the given lists.
     Save the results to text files and print the mean of each metric.
@@ -294,7 +297,7 @@ def calculate_metrics_damage(all_predictions, all_targets, folder_name):
         file.write(f"Jaccard: {jaccard}\n")
         file.write(f"Hausdorff: {hausdorff}\n")
 
-def save_plot(all_predictions, all_labels, all_Ninput, folder_name):
+def save_plot_Temp(all_predictions, all_labels, all_Ninput, folder_name):
     """
     Save plots of slices from predictions, labels, and Ninput arrays.
     :param all_predictions: List of 3D numpy arrays (predictions).
@@ -304,17 +307,17 @@ def save_plot(all_predictions, all_labels, all_Ninput, folder_name):
     """
     # Extract slices from the 3D arrays
     center = 21
-    z_slices = [item[center, :, :] for item in all_predictions]
+    x_slices = [item[center, :, :] for item in all_predictions]
     y_slices = [item[:, center, :] for item in all_predictions]
-    x_slices = [item[:, :, center] for item in all_predictions]
+    z_slices = [item[:, :, center] for item in all_predictions]
 
-    zz_slices = [item[center, :, :] for item in all_labels]
+    xx_slices = [item[center, :, :] for item in all_labels]
     yy_slices = [item[:, center, :] for item in all_labels]
-    xx_slices = [item[:, :, center] for item in all_labels]
+    zz_slices = [item[:, :, center] for item in all_labels]
 
-    zzz_slices = [item[center, :, :] for item in all_Ninput]
+    xxx_slices = [item[center, :, :] for item in all_Ninput]
     yyy_slices = [item[:, center, :] for item in all_Ninput]
-    xxx_slices = [item[:, :, center] for item in all_Ninput]
+    zzz_slices = [item[:, :, center] for item in all_Ninput]
 
     sample_count = len(all_predictions)
     
@@ -322,11 +325,52 @@ def save_plot(all_predictions, all_labels, all_Ninput, folder_name):
         fig, axes = plt.subplots(1, 6, figsize=(30, 5))
         
         # Plot Z, Y, X slices for predictions, labels, and Ninput
-        for ax, slice_data, title in zip(axes, [z_slices[i], zz_slices[i], y_slices[i], yy_slices[i], x_slices[i], xx_slices[i]], 
-                                         ["Z-slice (pred)", "Z-slice (gt)", "Y-slice (pred)", "Y-slice (gt)", "X-slice (pred)", "X-slice (gt)"]):
+        for ax, slice_data, title in zip(axes, [z_slices[i], zz_slices[i], x_slices[i], xx_slices[i], y_slices[i], yy_slices[i]], 
+                                         ["Z-slice (pred)", "Z-slice (gt)", "X-slice (pred)", "X-slice (gt)", "Y-slice (pred)", "Y-slice (gt)"]):
             ax.imshow(slice_data, cmap='jet')
             ax.set_title(f'Sample {i+1}: {title}')
             ax.axis('off')
 
         plt.savefig(f"{folder_name}/sample_{i+1}.png")
         plt.close() 
+        
+def save_plot_Dmg(all_predictions, all_targets, all_Ninput, folder_name, threshold = 0):
+    """
+    Save plots of slices from predictions, targets, and Ninput arrays.
+    :param all_predictions: List of 3D numpy arrays (predictions).
+    :param all_targets: List of 3D numpy arrays (targets).
+    :param all_Ninput: List of 3D numpy arrays (Ninput data).
+    :param folder_name: Directory to save the plots.
+    """
+    
+    # Binarize all_predictions
+    binarized_predictions = [(item > threshold).astype(int) for item in all_predictions]
+    
+    # Extract slices from the 3D arrays
+    center = 21
+    x_slices = [item[center, :, :] for item in binarized_predictions]
+    y_slices = [item[:, center, :] for item in binarized_predictions]
+    z_slices = [item[:, :, center] for item in binarized_predictions]
+
+    xx_slices = [item[center, :, :] for item in all_targets]
+    yy_slices = [item[:, center, :] for item in all_targets]
+    zz_slices = [item[:, :, center] for item in all_targets]
+
+    xxx_slices = [item[center, :, :] for item in all_Ninput]
+    yyy_slices = [item[:, center, :] for item in all_Ninput]
+    zzz_slices = [item[:, :, center] for item in all_Ninput]
+
+    sample_count = len(all_predictions)
+    
+    for i in range(sample_count):
+        fig, axes = plt.subplots(1, 6, figsize=(30, 5))
+        
+        # Plot Z, Y, X slices for predictions, targets, and Ninput
+        for ax, slice_data, title in zip(axes, [z_slices[i], zz_slices[i], x_slices[i], xx_slices[i], y_slices[i], yy_slices[i]], 
+                                         ["Z-slice (pred)", "Z-slice (gt)", "X-slice (pred)", "X-slice (gt)", "Y-slice (pred)", "Y-slice (gt)"]):
+            ax.imshow(slice_data)
+            ax.set_title(f'Sample {i+1}: {title}')
+            ax.axis('off')
+
+        plt.savefig(f"{folder_name}/sample_{i+1}.png")
+        plt.close()       

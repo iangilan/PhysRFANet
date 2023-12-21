@@ -2,9 +2,11 @@ import torch
 from models import RFACNN, RFAUNet, RFAAttUNet
 from data_loader_Dmg import DmgDataset, load_data
 from torch.utils.data import Dataset, DataLoader
-from utils import dice_loss
+from utils import dice_loss, calculate_metrics_Dmg, save_plot_Dmg
 import config
-from config import num_epochs, batch_size, model_path_Dmg, file_paths
+import utils
+from config import num_epochs, batch_size, model_path_Dmg, file_paths, figure_path_Dmg
+import os
 
 def test_model(model, test_loader):
     model.eval()  # Set the model to evaluation mode
@@ -39,7 +41,24 @@ def test_model(model, test_loader):
     print('Average Test Loss:', avg_loss)
 
     # Additional evaluation metrics can be calculated here
-    # ...
+    # Check if the directory already exists
+    if not os.path.exists(figure_path_Dmg):
+        # If it doesn't exist, create the directory
+        os.makedirs(figure_path_Dmg)
+        print(f"Directory '{figure_path_Dmg}' created successfully.")
+    else:
+        print(f"Directory '{figure_path_Dmg}' already exists.")
+
+    ## Flatten the lists for plotting
+    all_predictions = [item for sublist in all_predictions for item in sublist]
+    all_labels = [item for sublist in all_labels for item in sublist]
+    all_Ninput = [item for sublist in all_Ninput for item in sublist]
+       
+    # calculate metrics
+    calculate_metrics_Dmg(all_predictions, all_labels, figure_path_Dmg)
+
+    # save plots
+    save_plot_Dmg(all_predictions, all_labels, all_Ninput, figure_path_Dmg)
 
     return all_predictions, all_labels, avg_loss
 

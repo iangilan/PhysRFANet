@@ -11,6 +11,10 @@ gamma = 0.2
 model_path_Temp = "model_Temp" # Replace with your actual Temperature model path
 model_path_Dmg  = "model_Dmg"  # Replace with your actual Damage model path
 
+# figure path
+figure_path_Temp = "fig_Temp" # Replace with your actual Temperature figure path
+figure_path_Dmg  = "fig_Dmg"  # Replace with your actual Damage figure path
+
 # training/test data path
 data_path = "data"  # Replace with your actual data path
 file_paths = {
