@@ -19,7 +19,34 @@ def weighted_mse_loss(pred, target, weight=1.0, threshold=50.0):
     weighted_loss = mse_loss * (weight * mask.float() + (1.0 - mask.float()))
     return torch.mean(weighted_loss)
 
-def dice_loss(pred, target, threshold=50):
+def dice_loss(pred, target, epsilon=1e-6):
+    """
+    Compute the Dice Loss.
+
+    Args:
+    - pred (torch.Tensor): the network's prediction output, with values in [0, 1].
+    - target (torch.Tensor): the ground truth targets, with values in [0, 1].
+    - epsilon (float): a small value to avoid division by zero.
+
+    Returns:
+    - dice_loss (torch.Tensor): the computed Dice loss.
+    """
+    pred = torch.sigmoid(pred)
+    # Flatten the tensors to simplify the computation
+    pred_flat = pred.view(-1)
+    target_flat = target.view(-1)
+
+    # Compute the intersection and union
+    intersection = (pred_flat * target_flat).sum()
+    union = pred_flat.sum() + target_flat.sum()
+
+    # Compute Dice coefficient and Dice loss
+    dice_coef = (2. * intersection + epsilon) / (union + epsilon)
+    dice_loss = 1 - dice_coef
+
+    return dice_loss
+
+def dice_loss50(pred, target, threshold=50):
     """
     Dice loss computation for binary classification problems.
 

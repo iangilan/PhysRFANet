@@ -61,9 +61,7 @@ def load_data(file_paths):
     MR_test_data_unforeseen, MR_test_data_dummy = train_test_split(MR_test_data, test_size=500, random_state=42)
     MR_train_data, MR_valid_data = train_test_split(MR_train_data, test_size=200, random_state=42)
     
-    return Dmg_train_data, Ninput_train_data, MR_train_data, 
-    Dmg_valid_data, Ninput_valid_data, MR_valid_data, 
-    Dmg_test_data_foreseen, Dmg_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen
+    return Dmg_train_data, Ninput_train_data, MR_train_data, Dmg_valid_data, Ninput_valid_data, MR_valid_data, Dmg_test_data_foreseen, Dmg_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen
 
 
 if __name__ == "__main__":
