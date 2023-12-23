@@ -55,7 +55,8 @@ If you use this tool in your research, please cite the following paper:
       year={2023},\
       eprint={2312.13947},\
       archivePrefix={arXiv},\
-      primaryClass={eess.IV}
+      primaryClass={eess.IV},\
+      doi={10.48550/arXiv.2312.13947}
 }
 - [A. Saha, M. R. Harowicz, L. J. Grimm, C. E. Kim, S. V. Ghate, R. Walsh, M. A. Mazurowski, A machine learning approach to radiogenomics of breast cancer: a study of 922 subjects and 529 DCE-MRI features, Br. J. Cancer. 119 (2018) 508–516.](https://www.nature.com/articles/s41416-018-0185-8)
 - BibTeX formatted citation\
