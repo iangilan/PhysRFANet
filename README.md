@@ -48,13 +48,13 @@ The model is evaluated based on Mean Squared Error (MSE), Root Mean Squared Erro
 ## Citation
 If you use this tool in your research, please cite the following paper:
 - [M. Shin, M. Seo, S. Cho, J. Park, J. Kwon, D. Lee, K. Yoon. "PhysRFANet: Physics-Guided Neural Network for Real-Time Prediction of Thermal Effect During Radiofrequency Ablation Treatment." *Arxiv*](https://arxiv.org/abs/2312.13947)
-- BibTeX formatted citation
-@misc{shin2023physrfanet,
-      title={{PhysRFANet}: {P}hysics-Guided Neural Network for Real-Time Prediction of Thermal Effect During Radiofrequency Ablation Treatment}, 
-      author={Minwoo Shin and Minjee Seo and Seonaeng Cho and Juil Park and Joon Ho Kwon and Deukhee Lee and Kyungho Yoon},
-      year={2023},
-      eprint={2312.13947},
-      archivePrefix={arXiv},
+- BibTeX formatted citation\
+@misc{shin2023physrfanet,\
+      title={{PhysRFANet}: {P}hysics-Guided Neural Network for Real-Time Prediction of Thermal Effect During Radiofrequency Ablation Treatment},\
+      author={Minwoo Shin and Minjee Seo and Seonaeng Cho and Juil Park and Joon Ho Kwon and Deukhee Lee and Kyungho Yoon},\
+      year={2023},\
+      eprint={2312.13947},\
+      archivePrefix={arXiv},\
       primaryClass={eess.IV}
 }
 - [A. Saha, M. R. Harowicz, L. J. Grimm, C. E. Kim, S. V. Ghate, R. Walsh, M. A. Mazurowski, A machine learning approach to radiogenomics of breast cancer: a study of 922 subjects and 529 DCE-MRI features, Br. J. Cancer. 119 (2018) 508–516.](https://www.nature.com/articles/s41416-018-0185-8)
