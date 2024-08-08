@@ -1,6 +1,6 @@
 # Configuration settings
 num_epochs = 100
-batch_size = 16 #16 for RFACNN, RFAUNet # Batch size for DataLoader
+batch_size = 6 #16 for RFACNN, RFAUNet # Batch size for DataLoader
 
 # weights for the combined loss function (0.6, 0.2, 0.2) 
 alpha = 0.6
@@ -16,8 +16,10 @@ figure_path_Temp = "fig_Temp" # Replace with your actual Temperature figure path
 figure_path_Dmg  = "fig_Dmg"  # Replace with your actual Damage figure path
 
 # training/test data path
-data_path = "/media/mws/Data/data_RFA" #"data"  # Replace with your actual data path
+#data_path = "/media/mws/Data/data_RFA" #"data"  # Replace with your actual data path
+data_path = "/media/mws/usb/data_RFA" #"data"  # Replace with your actual data path
 #data_path = "data"  # Replace with your actual data path
+
 file_paths = {
     'Temp_train'  : data_path + '/data_Temp/Temp_train.npy',
     'Temp_test'   : data_path + '/data_Temp/Temp_test.npy',

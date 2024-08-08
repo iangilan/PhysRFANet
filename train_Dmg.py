@@ -10,6 +10,7 @@ from config import num_epochs, batch_size, model_path_Dmg, file_paths, model_nam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from scipy.spatial.distance import directed_hausdorff
 import matplotlib.pyplot as plt
+import os
 
 # Use the configurations
 file_paths = config.file_paths
@@ -161,6 +162,14 @@ if __name__ == "__main__":
     #plt.rcParams['xtick.labelsize'] = 14
     #plt.rcParams['ytick.labelsize'] = 14
     #plt.rcParams['legend.fontsize'] = 14
+
+    # Create a training graph folder
+    directory = "train_graph"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print(f"Directory '{directory}' created.")
+    else:
+        print(f"Directory '{directory}' already exists.")
     
     # Plot training graph
     plt.figure(figsize=(10,5))

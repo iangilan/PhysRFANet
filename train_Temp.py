@@ -7,6 +7,7 @@ from utils import new_combined_loss
 from config import num_epochs, batch_size, alpha, beta, gamma, model_path_Temp, file_paths, model_name
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import matplotlib.pyplot as plt
+import os
 
 def get_model(choice):
     if choice == "1":
@@ -157,6 +158,14 @@ if __name__ == "__main__":
     #plt.rcParams['xtick.labelsize'] = 14
     #plt.rcParams['ytick.labelsize'] = 14
     #plt.rcParams['legend.fontsize'] = 14
+
+    # Create a training graph folder
+    directory = "train_graph"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print(f"Directory '{directory}' created.")
+    else:
+        print(f"Directory '{directory}' already exists.")
         
     # Plot training graph
     plt.figure(figsize=(10,5))

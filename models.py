@@ -179,9 +179,9 @@ class RFAAttUNet(nn.Module):
         self.mid3 = self.unet_mid(256, 256, dropout=0)
         self.mid4 = self.unet_mid(256, 256, dropout=0)
 
-        self.sa1 = self.self_attention(256, num_heads=8)
-        self.sa2 = self.self_attention(256, num_heads=8)
-        self.sa3 = self.self_attention(128, num_heads=1)
+        self.sa1 = self.self_attention(256, num_heads=256)
+        self.sa2 = self.self_attention(256, num_heads=128)
+        self.sa3 = self.self_attention(128, num_heads=2)
 
         self.up1 = self.unet_up(256, 128)
         self.up2 = self.unet_up(256, 64)
@@ -266,7 +266,7 @@ class RFAAttUNet(nn.Module):
         u1 = self.apply_attention(self.sa2, u1)
         u2 = self.up2(u1)
         u2 = self.skip_up(u2, d1)
-        u2 = self.apply_attention(self.sa3, u2)   # IS THIS NECESSARY????
+        u2 = self.apply_attention(self.sa3, u2)
         u3 = self.final(u2)
 
         if self.out_inter:
