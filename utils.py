@@ -117,7 +117,7 @@ def mae_3d(pred, label):
     mae = np.mean(np.abs(pred - label))
     return mae
 
-def dice_score(pred, target, epsilon=1e-6):
+def dice_score(pred, target, epsilon=1e-6): # this metric is used for the Dmg data
     """
     Compute the Dice Loss.
 
@@ -136,6 +136,29 @@ def dice_score(pred, target, epsilon=1e-6):
         target = torch.from_numpy(target)    
     
     pred = torch.sigmoid(pred)
+    # Flatten the tensors to simplify the computation
+    pred_flat = pred.view(-1)
+    target_flat = target.view(-1)
+
+    # Compute the intersection and union
+    intersection = (pred_flat * target_flat).sum()
+    union = pred_flat.sum() + target_flat.sum()
+
+    # Compute Dice coefficient and Dice loss
+    dice_coef = (2. * intersection + epsilon) / (union + epsilon)
+
+    return dice_coef
+
+def dice_score_threshold(pred, target, threshold): # this metric is used for the Temp data
+    epsilon=1e-6
+    # Convert numpy arrays to PyTorch tensors if necessary
+    if isinstance(pred, np.ndarray):
+        pred = torch.from_numpy(pred)
+    if isinstance(target, np.ndarray):
+        target = torch.from_numpy(target)    
+    pred = (pred > threshold).float()
+    target = (target > threshold).float()
+        
     # Flatten the tensors to simplify the computation
     pred_flat = pred.view(-1)
     target_flat = target.view(-1)
@@ -229,11 +252,11 @@ def calculate_metrics_Temp(all_predictions, all_labels, folder_name):
 
     # Calculate and save Dice scores
     # Assuming dice_score function takes a threshold as the third argument
-    dice_scores_40 = [dice_score(p, l, 40) for p, l in zip(pred, label)]
+    dice_scores_40 = [dice_score_threshold(p, l, 40) for p, l in zip(pred, label)]
     dice_scores_nparray_40 = np.array(dice_scores_40).reshape(-1, 1)
     np.savetxt(f"{folder_name}/dice_40.txt", dice_scores_nparray_40, fmt='%.4f')
 
-    dice_scores_50 = [dice_score(p, l, 50) for p, l in zip(pred, label)]
+    dice_scores_50 = [dice_score_threshold(p, l, 50) for p, l in zip(pred, label)]
     dice_scores_nparray_50 = np.array(dice_scores_50).reshape(-1, 1)
     np.savetxt(f"{folder_name}/dice_50.txt", dice_scores_nparray_50, fmt='%.4f')
 

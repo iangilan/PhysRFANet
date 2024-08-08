@@ -1,10 +1,10 @@
 # Configuration settings
 num_epochs = 100
-batch_size = 16 # Batch size for DataLoader
+batch_size = 16 #16 for RFACNN, RFAUNet # Batch size for DataLoader
 
-# weights for the combined loss function
-alpha = 0.7
-beta  = 0.1
+# weights for the combined loss function (0.6, 0.2, 0.2) 
+alpha = 0.6
+beta  = 0.2
 gamma = 0.2
 
 # model path
@@ -16,7 +16,8 @@ figure_path_Temp = "fig_Temp" # Replace with your actual Temperature figure path
 figure_path_Dmg  = "fig_Dmg"  # Replace with your actual Damage figure path
 
 # training/test data path
-data_path = "data"  # Replace with your actual data path
+data_path = "/media/mws/Data/data_RFA" #"data"  # Replace with your actual data path
+#data_path = "data"  # Replace with your actual data path
 file_paths = {
     'Temp_train'  : data_path + '/data_Temp/Temp_train.npy',
     'Temp_test'   : data_path + '/data_Temp/Temp_test.npy',
@@ -27,3 +28,9 @@ file_paths = {
     'MR_train'    : data_path + '/data_MR/MRdata_train.npy',
     'MR_test'     : data_path + '/data_MR/MRdata_test.npy'
 }
+
+# Model selection
+model_name = "3"  # Choose 1, 2, or 3 for models: "(1) RFACNN", "(2) RFAUNet", "(3) RFAAttUNet"
+
+# Foreseen or unforeseen test dataset flag
+use_foreseen = True  # Change this to False to use unforeseen dataset

@@ -76,8 +76,8 @@ if __name__ == "__main__":
     Dmg_test_dataset_unforeseen  = DmgDataset(Ninput_test_data_unforeseen, MR_test_data_unforeseen, Dmg_test_data_unforeseen)
 
     # Create the data loader
-    Dmg_train_loader = DataLoader(Dmg_train_dataset, batch_size=batch_size, shuffle=True)
-    Dmg_valid_loader = DataLoader(Dmg_valid_dataset, batch_size=batch_size, shuffle=True)
+    Dmg_train_loader = DataLoader(Dmg_train_dataset, batch_size=batch_size, shuffle=False)
+    Dmg_valid_loader = DataLoader(Dmg_valid_dataset, batch_size=batch_size, shuffle=False)
     Dmg_test_loader_foreseen = DataLoader(Dmg_test_dataset_foreseen, batch_size=batch_size, shuffle=False)    
     Dmg_test_loader_unforeseen = DataLoader(Dmg_test_dataset_foreseen, batch_size=batch_size, shuffle=False)    
 
