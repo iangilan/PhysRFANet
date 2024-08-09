@@ -214,7 +214,7 @@ class RFAAttUNet(nn.Module):
         return nn.Sequential(*layers)
 
     @staticmethod
-    def unet_up(in_size, out_size, dropout=0.2):
+    def unet_up(in_size, out_size, dropout=0.1):
         layers = [
             nn.ConvTranspose3d(in_size, out_size, 2, 2, bias=False),
             nn.BatchNorm3d(out_size),

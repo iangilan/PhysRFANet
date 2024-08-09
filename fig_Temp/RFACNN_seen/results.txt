@@ -1,0 +1,6 @@
+Mean Squared Error: 0.41722869873046875
+Root Mean Squared Error: 0.6199086904525757
+Mean Absolute Error: 0.3864658772945404
+Dice Coefficient>30: 1.0
+Dice Coefficient>40: 0.9594473242759705
+Dice Coefficient>50: 0.9645482301712036

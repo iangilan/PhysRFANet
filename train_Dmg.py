@@ -148,12 +148,27 @@ if __name__ == "__main__":
     valid_loader = DataLoader(Dmg_valid_dataset, batch_size=batch_size, shuffle=False)
 
     # Train the model
-    #train_model(model, criterion, optimizer, train_loader, num_epochs)
     train_loss, valid_loss = train_model(model, criterion, optimizer, train_loader, valid_loader, num_epochs)
-    
+
     # Save the trained model
     model_name = model.__class__.__name__
     torch.save(model.state_dict(), f'{model_path_Dmg}/{model_name}_Dmg_{num_epochs}epoch.pth')    
+
+    # Save train_loss and valid_loss to text files
+    train_loss_file = f'train_graph/{model_name}_Dmg_train_loss.txt'
+    valid_loss_file = f'train_graph/{model_name}_Dmg_valid_loss.txt'
+
+    # Write train_loss to a text file
+    with open(train_loss_file, 'w') as f:
+        for loss in train_loss:
+            f.write(f"{loss}\n")
+        print(f"Training loss saved to {train_loss_file}")
+
+    # Write valid_loss to a text file
+    with open(valid_loss_file, 'w') as f:
+        for loss in valid_loss:
+            f.write(f"{loss}\n")
+        print(f"Validation loss saved to {valid_loss_file}")
 
     # Set font sizes
     plt.rcParams.update({'font.size': 20}) 
@@ -171,32 +186,13 @@ if __name__ == "__main__":
     else:
         print(f"Directory '{directory}' already exists.")
     
-    # Plot training graph
-    plt.figure(figsize=(10,5))
-    plt.title("Training Loss")
-    plt.plot(train_loss,label="train")
-    plt.xlabel("iterations")
-    plt.ylabel("Loss")
-    plt.legend()
-    plt.savefig(f'train_graph/{model_name}_Dmg_train.png', dpi=600, pad_inches=0)
-    plt.close()
-    
-    
-    plt.figure(figsize=(10,5))
-    plt.title("Validation Loss")
-    plt.plot(valid_loss,label="val")
-    plt.xlabel("iterations")
-    plt.ylabel("Loss")
-    plt.legend()
-    plt.savefig(f'train_graph/{model_name}_Dmg_valid.png', dpi=600, pad_inches=0)
-    plt.close()
-    
+    # Plot training graph   
     plt.figure(figsize=(10,5))
     plt.title("Training and Validation Loss")
     plt.plot(valid_loss,label="val")
     plt.plot(train_loss,label="train")
-    plt.xlabel("iterations")
+    plt.xlabel("Epochs")
     plt.ylabel("Loss")
     plt.legend()
-    plt.savefig(f'train_graph/{model_name}_Dmg_train&valid.png', dpi=600, pad_inches=0)
+    plt.savefig(f'train_graph/{model_name}_Dmg_train_valid.png', dpi=600, pad_inches=0)
     plt.close()

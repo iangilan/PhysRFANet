@@ -117,7 +117,7 @@ def mae_3d(pred, label):
     mae = np.mean(np.abs(pred - label))
     return mae
 
-def dice_score(pred, target, epsilon=1e-6): # this metric is used for the Dmg data
+def dice_score(pred, target, epsilon=1e-6): # this metric is used for the Damage data
     """
     Compute the Dice Loss.
 
@@ -135,7 +135,7 @@ def dice_score(pred, target, epsilon=1e-6): # this metric is used for the Dmg da
     if isinstance(target, np.ndarray):
         target = torch.from_numpy(target)    
     
-    pred = torch.sigmoid(pred)
+    pred = torch.sigmoid(pred) # Needed for smoothing the boundary (binary data)
     # Flatten the tensors to simplify the computation
     pred_flat = pred.view(-1)
     target_flat = target.view(-1)
@@ -232,26 +232,29 @@ def calculate_metrics_Temp(all_predictions, all_labels, folder_name):
     :param folder_name: Directory to save the result files.
     """
     # Extract 3D arrays from the lists
-    pred = [item[:, :, :] for item in all_predictions]
+    pred  = [item[:, :, :] for item in all_predictions]
     label = [item[:, :, :] for item in all_labels]
 
     # Calculate and save MSE
     mse_per_item = [mse_3d(p, l) for p, l in zip(pred, label)]
-    mse_nparray = np.array(mse_per_item)
+    mse_nparray  = np.array(mse_per_item)
     np.savetxt(f"{folder_name}/mse.txt", mse_nparray, fmt='%.4f')
 
     # Calculate and save RMSE
     rmse_per_item = [rmse_3d(p, l) for p, l in zip(pred, label)]
-    rmse_nparray = np.array(rmse_per_item)
+    rmse_nparray  = np.array(rmse_per_item)
     np.savetxt(f"{folder_name}/rmse.txt", rmse_nparray, fmt='%.4f')
 
     # Calculate and save MAE
     mae_per_item = [mae_3d(p, l) for p, l in zip(pred, label)]
-    mae_nparray = np.array(mae_per_item)
+    mae_nparray  = np.array(mae_per_item)
     np.savetxt(f"{folder_name}/mae.txt", mae_nparray, fmt='%.4f')
 
     # Calculate and save Dice scores
-    # Assuming dice_score function takes a threshold as the third argument
+    dice_scores_30 = [dice_score_threshold(p, l, 30) for p, l in zip(pred, label)]
+    dice_scores_nparray_30 = np.array(dice_scores_30).reshape(-1, 1)
+    np.savetxt(f"{folder_name}/dice_30.txt", dice_scores_nparray_30, fmt='%.4f')  
+
     dice_scores_40 = [dice_score_threshold(p, l, 40) for p, l in zip(pred, label)]
     dice_scores_nparray_40 = np.array(dice_scores_40).reshape(-1, 1)
     np.savetxt(f"{folder_name}/dice_40.txt", dice_scores_nparray_40, fmt='%.4f')
@@ -260,23 +263,27 @@ def calculate_metrics_Temp(all_predictions, all_labels, folder_name):
     dice_scores_nparray_50 = np.array(dice_scores_50).reshape(-1, 1)
     np.savetxt(f"{folder_name}/dice_50.txt", dice_scores_nparray_50, fmt='%.4f')
 
-    mse = np.mean(mse_nparray)
-    rmse = np.mean(rmse_nparray)
-    mae = np.mean(mae_nparray)
+    mse    = np.mean(mse_nparray)
+    rmse   = np.mean(rmse_nparray)
+    mae    = np.mean(mae_nparray)
+    dice30 = np.mean(dice_scores_nparray_30)
     dice40 = np.mean(dice_scores_nparray_40)
     dice50 = np.mean(dice_scores_nparray_50)
+    
     # Print the mean of each metric
-    print('mse: '   , mse   ) 
-    print('rmse: '  , rmse  ) 
-    print('mae: '   , mae   ) 
-    print('dice40: ', dice40)
-    print('dice50: ', dice50)
-
+    print(f'mse:    {mse:.4f}') 
+    print(f'rmse:   {rmse:.4f}') 
+    print(f'mae:    {mae:.4f}') 
+    print(f'dice30: {dice30:.4f}')
+    print(f'dice40: {dice40:.4f}')
+    print(f'dice50: {dice50:.4f}')
+    
     file_path = f"{folder_name}/results.txt"
     with open(file_path, "w") as file:
         file.write(f"Mean Squared Error: {mse}\n")
         file.write(f"Root Mean Squared Error: {rmse}\n")
         file.write(f"Mean Absolute Error: {mae}\n")
+        file.write(f"Dice Coefficient>30: {dice30}\n")
         file.write(f"Dice Coefficient>40: {dice40}\n")
         file.write(f"Dice Coefficient>50: {dice50}\n")
 
@@ -290,7 +297,7 @@ def calculate_metrics_Dmg(all_predictions, all_targets, folder_name):
     """        
     
     # Extract 3D arrays from the lists
-    pred = [item[:, :, :] for item in all_predictions]
+    pred   = [item[:, :, :] for item in all_predictions]
     target = [item[:, :, :] for item in all_targets]
 
     # Calculate and save Dice scores
@@ -309,10 +316,11 @@ def calculate_metrics_Dmg(all_predictions, all_targets, folder_name):
     dice = np.mean(dice_scores_nparray)
     jaccard = np.mean(jaccard_scores_nparray)
     hausdorff = np.mean(hausdorff_nparray)
+    
     # Print the mean of each metric
-    print('dice: ', dice)
-    print('jaccard: ', jaccard)
-    print('hausdorff: ', hausdorff)
+    print(f'dice:      {dice:.4f}')
+    print(f'jaccard:   {jaccard:.4f}')
+    print(f'hausdorff: {hausdorff:.4f}')
 
     file_path = f"{folder_name}/results.txt"
     with open(file_path, "w") as file:
