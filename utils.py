@@ -404,4 +404,124 @@ def save_plot_Dmg(all_predictions, all_targets, all_Ninput, folder_name, thresho
             ax.axis('off')
 
         plt.savefig(f"{folder_name}/sample_{i+1}.png")
-        plt.close()       
+        plt.close()
+#=======================================================================================        
+def save_plot_Temp_each(all_predictions, all_labels, all_Ninput, folder_name):
+    """
+    Save plots of slices from predictions, labels, and Ninput arrays.
+    :param all_predictions: List of 3D numpy arrays (predictions).
+    :param all_labels: List of 3D numpy arrays (labels).
+    :param all_Ninput: List of 3D numpy arrays (Ninput data).
+    :param folder_name: Directory to save the plots.
+    """
+    # Extract slices from the 3D arrays
+    center = 21
+    x_slices = [item[center, :, :] for item in all_predictions]
+    y_slices = [item[:, center, :] for item in all_predictions]
+    z_slices = [item[:, :, center] for item in all_predictions]
+
+    xx_slices = [item[center, :, :] for item in all_labels]
+    yy_slices = [item[:, center, :] for item in all_labels]
+    zz_slices = [item[:, :, center] for item in all_labels]
+
+    xxx_slices = [item[center, :, :] for item in all_Ninput]
+    yyy_slices = [item[:, center, :] for item in all_Ninput]
+    zzz_slices = [item[:, :, center] for item in all_Ninput]
+
+    sample_count = len(all_predictions)
+    
+    for i in range(sample_count):
+        # Save Z-slices
+        plt.imshow(z_slices[i], cmap='jet')
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Z_pred.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        plt.imshow(zz_slices[i], cmap='jet')
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Z_gt.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        # Save X-slices
+        plt.imshow(x_slices[i], cmap='jet')
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_X_pred.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        plt.imshow(xx_slices[i], cmap='jet')
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_X_gt.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        # Save Y-slices
+        plt.imshow(y_slices[i], cmap='jet')
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Y_pred.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        plt.imshow(yy_slices[i], cmap='jet')
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Y_gt.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+        
+def save_plot_Dmg_each(all_predictions, all_targets, all_Ninput, folder_name, threshold = 0):
+    """
+    Save plots of slices from predictions, targets, and Ninput arrays.
+    :param all_predictions: List of 3D numpy arrays (predictions).
+    :param all_targets: List of 3D numpy arrays (targets).
+    :param all_Ninput: List of 3D numpy arrays (Ninput data).
+    :param folder_name: Directory to save the plots.
+    """
+    
+    # Binarize all_predictions
+    binarized_predictions = [(item > threshold).astype(int) for item in all_predictions]
+    
+    # Extract slices from the 3D arrays
+    center = 21
+    x_slices = [item[center, :, :] for item in binarized_predictions]
+    y_slices = [item[:, center, :] for item in binarized_predictions]
+    z_slices = [item[:, :, center] for item in binarized_predictions]
+
+    xx_slices = [item[center, :, :] for item in all_targets]
+    yy_slices = [item[:, center, :] for item in all_targets]
+    zz_slices = [item[:, :, center] for item in all_targets]
+
+    xxx_slices = [item[center, :, :] for item in all_Ninput]
+    yyy_slices = [item[:, center, :] for item in all_Ninput]
+    zzz_slices = [item[:, :, center] for item in all_Ninput]
+
+    sample_count = len(all_predictions)
+    
+    for i in range(sample_count):
+        # Save Z-slices
+        plt.imshow(z_slices[i])
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Z_pred.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        plt.imshow(zz_slices[i])
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Z_gt.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        # Save X-slices
+        plt.imshow(x_slices[i])
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_X_pred.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        plt.imshow(xx_slices[i])
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_X_gt.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        # Save Y-slices
+        plt.imshow(y_slices[i])
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Y_pred.png", bbox_inches='tight', pad_inches=0)
+        plt.close()
+
+        plt.imshow(yy_slices[i])
+        plt.axis('off')
+        plt.savefig(f"{folder_name}/sample_{i+1}_Y_gt.png", bbox_inches='tight', pad_inches=0)
+        plt.close()           

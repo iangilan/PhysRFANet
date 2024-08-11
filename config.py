@@ -33,7 +33,7 @@ file_paths = {
 }
 
 # Model selection
-model_name = "3"  # Choose 1, 2, or 3 for models: "(1) RFACNN", "(2) RFAUNet", "(3) RFAAttUNet"
+model_name = "1"  # Choose 1, 2, or 3 for models: "(1) RFACNN", "(2) RFAUNet", "(3) RFAAttUNet"
 
 # Foreseen or unforeseen test dataset flag
-use_foreseen = 0  # Change this to False to use unforeseen dataset
+use_foreseen = 1  # Change this to False to use unforeseen dataset
