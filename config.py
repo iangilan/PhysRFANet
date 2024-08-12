@@ -16,10 +16,10 @@ figure_path_Temp = "fig_Temp" # Replace with your actual Temperature figure path
 figure_path_Dmg  = "fig_Dmg"  # Replace with your actual Damage figure path
 
 # training/test data path
-#data_path = "/media/mws/Data/data_RFA" #"data"  # Replace with your actual data path
+data_path = "/media/mws/Data/data_RFA" #"data"  # Replace with your actual data path
 #data_path = "/media/mws/usb/data_RFA" #"data"  # Replace with your actual data path
 #data_path = "data"  # Replace with your actual data path
-data_path = "data_RFA"
+#data_path = "data_RFA"
 
 file_paths = {
     'Temp_train'  : data_path + '/data_Temp/Temp_train.npy',
@@ -33,7 +33,7 @@ file_paths = {
 }
 
 # Model selection
-model_name = "1"  # Choose 1, 2, or 3 for models: "(1) RFACNN", "(2) RFAUNet", "(3) RFAAttUNet"
+model_name = "3"  # Choose 1, 2, or 3 for models: "(1) RFACNN", "(2) RFAUNet", "(3) RFAAttUNet"
 
 # Foreseen or unforeseen test dataset flag
 use_foreseen = 1  # Change this to False to use unforeseen dataset

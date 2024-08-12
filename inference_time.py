@@ -8,7 +8,6 @@ from config import alpha, beta, gamma, model_path_Temp, file_paths, figure_path_
 import numpy as np
 import os 
 
-
 def get_model(choice):
     if choice == "1":
         return RFACNN()
@@ -19,9 +18,6 @@ def get_model(choice):
     else:
         raise ValueError(f"Unknown model choice: {choice}")
      
-        
-     
-        
 def measure_time(model, Ninput, MR):
     
     total_infer_time = 0
@@ -47,12 +43,8 @@ def measure_time(model, Ninput, MR):
     avg_infer_time = total_infer_time / len(Ninput)
     
     return avg_infer_time
-
-
-
-            
+           
 if __name__ == "__main__":
-    
     
     Temp_train_data, Ninput_train_data, MR_train_data,Temp_valid_data, Ninput_valid_data, MR_valid_data, Temp_test_data_foreseen, Temp_test_data_unforeseen, Ninput_test_data_foreseen, Ninput_test_data_unforeseen, MR_test_data_foreseen, MR_test_data_unforeseen = load_data(file_paths)
     Ninput_test_data = torch.cat((Ninput_test_data_foreseen, Ninput_test_data_unforeseen))
