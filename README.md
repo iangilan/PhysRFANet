@@ -23,7 +23,7 @@ The dataset used in this project consists of:
 - Temperature distribution data post-RFA treatment (https://drive.google.com/drive/u/3/folders/16n7pxy6xu1_FxEonRygYzY2eoViybYVp)
 - Ablated area data post-RFA treatment (https://drive.google.com/drive/u/3/folders/1tdP9XYhw9ngsphZpTX-pW58eGEmOH0wr)
 - Electrode location and geometry data during RFA treatment (https://drive.google.com/drive/u/3/folders/1F4lV7uL2pAGCMpC09Q1k2XIegJRtIoQ-).
-- Segmented breast tumor data obtained from MR images (https://drive.google.com/drive/u/3/folders/1E-5jkI7lijlGaqmILcMUbeiAmQO5PMD_).
+- Segmented breast tumor data obtained from MR images (https://drive.google.com/drive/u/3/folders/1E-5jkI7lijlGaqmILcMUbeiAmQO5PMD_ ).
 > Note: MR images of breast cancer patients from a publicly available dataset ([Saha et al., 2018](https://www.nature.com/articles/s41416-018-0185-8)) were utilized to model tumor geometry.
 
 ## Usage
